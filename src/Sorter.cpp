@@ -1,4 +1,6 @@
 #include "../include/Sorter.h"
+#include "SFML/System/Vector2.hpp"
+#include "SFML/Window/Mouse.hpp"
 #include <algorithm>
 #include <sstream>
 #include <thread>
@@ -14,8 +16,10 @@ Sorter::~Sorter()
 Sorter::Sorter()
 {
     initText();
+    initButtons();
     m_algorithms.setSortDelay(m_sortDelay);
 }
+
 
 void Sorter::initText()
 {
@@ -31,6 +35,12 @@ void Sorter::initText()
     m_infoText.setPosition(sf::Vector2f(10,20));
 }
 
+void Sorter::initButtons()
+{
+    Button& bubbleButton = addButton(sf::Vector2f(200,50), "BUBBLE", sf::Vector2f(100,40), m_font, m_mousePosView, SortTypes::BUBBLE);
+    Button& insertionButton = addButton(sf::Vector2f(350,50), "INSERTION", sf::Vector2f(150,40), m_font, m_mousePosView, SortTypes::INSERTION);
+    Button& selectionSort = addButton(sf::Vector2f(525,50), "SELECTION", sf::Vector2f(150,40), m_font, m_mousePosView, SortTypes::SELECTION);
+}
 void Sorter::updateText()
 {
     std::stringstream ss;
@@ -203,6 +213,7 @@ void Sorter::setDelay(float delay)
         m_sortDelay += delay;
 }
 
+
 int& Sorter::getDelay()
 {
     return m_sortDelay;
@@ -213,8 +224,14 @@ Bar& Sorter::addBar(float barHeight)
     return m_bars.emplace_back(barHeight);
 }
 
+Button& Sorter::addButton(sf::Vector2f pos, std::string s, sf::Vector2f size, sf::Font &font, sf::Vector2f& mousePos, int type)
+{
+    return m_buttons.emplace_back(pos, s, size, font, mousePos, type);
+}
+
 void Sorter::update()
 {
+    updateMousePos();
     constrainDelay();
     updateText();
     getInput();
@@ -223,8 +240,31 @@ void Sorter::update()
     {
         joinSortThread();
     }
+
+    // UPDATE BUTTONS + check if hover and mouse down = active
+    updateButtons();
         
 
+}
+
+void Sorter::updateMousePos()
+{
+    m_mousePosView = m_ptrWindow->mapPixelToCoords(sf::Mouse::getPosition(*m_ptrWindow));
+}
+
+void Sorter::updateButtons()
+{
+    for(auto &button : m_buttons)
+    {
+        button.update();
+        if(button.checkHover() && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            m_currentSort = button.activate();
+        }
+        else{
+            button.setDefault();
+        }
+    }
 }
 
 void Sorter::constrainDelay()
@@ -252,6 +292,12 @@ void Sorter::render(sf::RenderTarget &target)
 void Sorter::renderUI( sf::RenderTarget& target )
 {
     target.draw(m_infoText);
+    for(auto &button : m_buttons)
+    {
+        target.draw(button.bkgShape);
+        target.draw(button.mainText);
+    }
+
 }
 
 void Sorter::joinSortThread()

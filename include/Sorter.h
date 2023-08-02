@@ -60,6 +60,8 @@ class Sorter
 
         SortingAlgorithms m_algorithms;
         std::vector<Button> m_buttons;
+        
+        sf::Vector2f m_mousePosView;
 
     private:
         void getInput(  );
@@ -70,6 +72,9 @@ class Sorter
         void renderUI( sf::RenderTarget& target );
         void bubbleSort();
         void constrainDelay();
+        void initButtons();
+        void updateButtons();
+        void updateMousePos();
 
 
     public:
@@ -77,7 +82,10 @@ class Sorter
     public:
         Sorter();
         ~Sorter();
+
         Bar& addBar( float barHeight );
+        Button& addButton(sf::Vector2f pos, std::string s, sf::Vector2f size, sf::Font& font, sf::Vector2f& mousePos, int type);
+
         void update(  );
         void render( sf::RenderTarget& target );
         void initBars();
