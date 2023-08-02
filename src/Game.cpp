@@ -98,8 +98,7 @@ void Game::update()
     updateMousePos();
 
     // TODO : CHANGE DELAY
-    int delay = 999;
-    m_sorter.update(delay);
+    m_sorter.update();
 }
 
 

@@ -57,13 +57,14 @@ class Sorter
         SortingAlgorithms m_algorithms;
 
     private:
-        void getInput( int sortDelay );
-        void sortBars( int sortDelay );
+        void getInput(  );
+        void sortBars( );
         void randomiseBars();
         void initText();
         void updateText();
         void renderUI( sf::RenderTarget& target );
-        void bubbleSort(int sortDelay);
+        void bubbleSort();
+        void constrainDelay();
 
 
     public:
@@ -72,7 +73,7 @@ class Sorter
         Sorter();
         ~Sorter();
         Bar& addBar( float barHeight );
-        void update( int sortDelay );
+        void update(  );
         void render( sf::RenderTarget& target );
         void initBars();
         void joinSortThread();
