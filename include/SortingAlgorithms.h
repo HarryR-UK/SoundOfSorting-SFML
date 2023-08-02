@@ -9,9 +9,13 @@
 
 struct SortingAlgorithms
 {
-    void bubbleSort( std::vector<Bar>& bars, int sortDelay, bool& isSorting );
-    void insertionSort( std::vector<Bar>& bars, int sortDelay, bool& isSorting );
-    void selectionSort( std::vector<Bar>& bars, int sortDelay, bool& isSorting );
+    int* ptrSortingDelay = nullptr;
+
+    void bubbleSort( std::vector<Bar>& bars, bool& isSorting );
+    void insertionSort( std::vector<Bar>& bars, bool& isSorting );
+    void selectionSort( std::vector<Bar>& bars, bool& isSorting );
+
+    void setSortDelay(int& delay);
 };
 
 #endif // !SORTINGALGORITHMS_H

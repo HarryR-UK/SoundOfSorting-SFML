@@ -21,6 +21,7 @@
 #include "Bar.h"
 #include "SortTypes.h"
 #include "SortingAlgorithms.h"
+#include "Button.h"
 #include "Time.h"
 
 #include "SFML/System/Vector2.hpp"
@@ -43,10 +44,13 @@ class Sorter
 
         bool m_keyHeld = false;
         bool m_mouseHeld = false;
+
         bool m_isSorting = false;
+        bool m_finishSort = false;
 
 
-        int m_sortDelay = 55555;
+        int m_sortDelay = 200;
+        int m_maxSortDelay = 99999;
 
         // UI
         sf::Font m_font;
@@ -55,6 +59,7 @@ class Sorter
         std::thread m_sortingThread;
 
         SortingAlgorithms m_algorithms;
+        std::vector<Button> m_buttons;
 
     private:
         void getInput(  );
@@ -79,6 +84,9 @@ class Sorter
         void joinSortThread();
 
         void setWindow( sf::RenderWindow& window );
+        void setDelay(float delay);
+
+        int& getDelay();
 };
 
 

@@ -1,4 +1,5 @@
 #include "../include/Sorter.h"
+#include <algorithm>
 #include <sstream>
 #include <thread>
 
@@ -13,6 +14,7 @@ Sorter::~Sorter()
 Sorter::Sorter()
 {
     initText();
+    m_algorithms.setSortDelay(m_sortDelay);
 }
 
 void Sorter::initText()
@@ -32,7 +34,25 @@ void Sorter::initText()
 void Sorter::updateText()
 {
     std::stringstream ss;
+    std::string sortType_S;
+    switch(m_currentSort)
+    {
+        case SortTypes::BUBBLE:
+            sortType_S = "BUBBLE";
+            break;
+        case SortTypes::INSERTION:
+            sortType_S = "INSERTION";
+            break;
+        case SortTypes::SELECTION:
+            sortType_S = "SELECTION";
+            break;
+        default:
+            sortType_S = "";
+            break;
+    }
     ss << "FPS :" << Time::getFps() << '\n'
+        << "DELAY: " << m_sortDelay << '\n'
+        << "TYPE: " << sortType_S << '\n'
         ;
     m_infoText.setString(ss.str());
 }
@@ -78,7 +98,7 @@ void Sorter::getInput(  )
         }
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         {
-            if(!m_keyHeld)
+            if(!m_keyHeld && !m_finishSort)
             {
                 m_keyHeld = true;
                 sortBars();
@@ -99,7 +119,7 @@ void Sorter::getInput(  )
 
 void Sorter::randomiseBars()
 {
-
+    m_finishSort = false;
     // initbars
     m_bars.clear();
     m_barHeights.clear();
@@ -154,15 +174,15 @@ void Sorter::sortBars() {
     switch (m_currentSort) {
         case SortTypes::BUBBLE:
             m_isSorting = true;
-            m_sortingThread = std::thread(&SortingAlgorithms::bubbleSort, &m_algorithms, std::ref(m_bars), m_sortDelay, std::ref(m_isSorting));
+            m_sortingThread = std::thread(&SortingAlgorithms::bubbleSort, &m_algorithms, std::ref(m_bars), std::ref(m_isSorting));
             break;
         case SortTypes::INSERTION:
-            //m_isSorting = true;
-            //m_sortingThread = std::thread(&SortingAlgorithms::insertionSort, &m_algorithms, std::ref(m_bars), sortDelay, std::ref(m_isSorting));
+            m_isSorting = true;
+            m_sortingThread = std::thread(&SortingAlgorithms::insertionSort, &m_algorithms, std::ref(m_bars), std::ref(m_isSorting));
             break;
         case SortTypes::SELECTION:
-            //m_isSorting = true;
-            //m_sortingThread = std::thread(&SortingAlgorithms::selectionSort, &m_algorithms, std::ref(m_bars), sortDelay, std::ref(m_isSorting));
+            m_isSorting = true;
+            m_sortingThread = std::thread(&SortingAlgorithms::selectionSort, &m_algorithms, std::ref(m_bars), std::ref(m_isSorting));
             break;
         default:
             break;
@@ -177,6 +197,17 @@ void Sorter::setWindow(sf::RenderWindow &window)
     m_ptrWindow = &window;
 }
 
+void Sorter::setDelay(float delay)
+{
+    //if(!m_isSorting)
+        m_sortDelay += delay;
+}
+
+int& Sorter::getDelay()
+{
+    return m_sortDelay;
+}
+
 Bar& Sorter::addBar(float barHeight)
 {
     return m_bars.emplace_back(barHeight);
@@ -184,9 +215,9 @@ Bar& Sorter::addBar(float barHeight)
 
 void Sorter::update()
 {
+    constrainDelay();
     updateText();
     getInput();
-    constrainDelay();
     
     if(!m_isSorting && m_sortingThread.joinable())
     {
@@ -200,8 +231,8 @@ void Sorter::constrainDelay()
 {
     if(m_sortDelay < 0)
         m_sortDelay = 0;
-    if(m_sortDelay > 9999)
-        m_sortDelay = 9999;
+    if(m_sortDelay > m_maxSortDelay)
+        m_sortDelay = m_maxSortDelay;
 }
 
 void Sorter::render(sf::RenderTarget &target)
@@ -226,4 +257,5 @@ void Sorter::renderUI( sf::RenderTarget& target )
 void Sorter::joinSortThread()
 {
     m_sortingThread.join();
+    m_finishSort = true;
 }

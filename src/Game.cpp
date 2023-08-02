@@ -1,4 +1,5 @@
 #include "../include/Game.h"
+#include "SFML/Window/Keyboard.hpp"
 #include <vector>
 
 const bool Game::isRunning() const
@@ -49,10 +50,6 @@ void Game::initWindow()
 
 void Game::initFont()
 {
-    if(!m_mainFont.loadFromFile("../res/fonts/open-sans/OpenSans-Regular.ttf"))
-    {
-        std::cerr << "ERROR::GAME::INITFONT::Failed to load main font" << '\n';
-    }
 }
 
 void Game::initText()
@@ -78,7 +75,15 @@ void Game::pollEvents()
 
 void Game::getInput()
 {
-
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    {
+        m_sorter.setDelay(10);
+    }
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    { 
+        if(m_sorter.getDelay() > 0)
+            m_sorter.setDelay(-10);
+    }
 }
 
 void Game::updateMousePos()
