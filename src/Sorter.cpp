@@ -10,7 +10,8 @@
 
 Sorter::~Sorter()
 {
-
+    if(m_slider != nullptr)
+        delete m_slider;
 }
 
 Sorter::Sorter()
@@ -18,6 +19,7 @@ Sorter::Sorter()
     initText();
     initButtons();
     m_algorithms.setSortDelay(m_sortDelay);
+    
 }
 
 
@@ -40,6 +42,13 @@ void Sorter::initButtons()
     Button& bubbleButton = addButton(sf::Vector2f(200,50), "BUBBLE", sf::Vector2f(100,40), m_font, m_mousePosView, SortTypes::BUBBLE);
     Button& insertionButton = addButton(sf::Vector2f(350,50), "INSERTION", sf::Vector2f(150,40), m_font, m_mousePosView, SortTypes::INSERTION);
     Button& selectionSort = addButton(sf::Vector2f(525,50), "SELECTION", sf::Vector2f(150,40), m_font, m_mousePosView, SortTypes::SELECTION);
+}
+
+void Sorter::initSlider()
+{
+    sf::Vector2f size{300, 10};
+    sf::Vector2f pos{m_ptrWindow->getSize().x - (size.x), 30};
+    m_slider = new Slider(pos, size, m_mousePosView, m_maxSortDelay, m_sortDelay);
 }
 void Sorter::updateText()
 {
@@ -231,20 +240,45 @@ Button& Sorter::addButton(sf::Vector2f pos, std::string s, sf::Vector2f size, sf
 
 void Sorter::update()
 {
-    updateMousePos();
     constrainDelay();
-    updateText();
+
     getInput();
+    updateMousePos();
+
+    updateText();
+
+    updateButtons();
+
+    updateSlider();
     
     if(!m_isSorting && m_sortingThread.joinable())
     {
         joinSortThread();
     }
 
-    // UPDATE BUTTONS + check if hover and mouse down = active
-    updateButtons();
         
 
+}
+
+void Sorter::updateSlider()
+{
+    m_slider->update();
+
+    if(m_slider->checkHover())
+    {
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_slider->getHolderPosition().x <= m_slider->getBckgPos().x + (m_slider->getBckgSize().x * 0.5f) && m_slider->getHolderPosition().x >= m_slider->getBckgPos().x - (m_slider->getBckgSize().x * 0.5f))
+        {
+            m_slider->followMouse();
+        }
+    }
+    if(m_slider->getHolderPosition().x > m_slider->getBckgPos().x + (m_slider->getBckgSize().x * 0.5f))
+    {
+        m_slider->setHolderPosition(m_slider->getBckgPos().x + (m_slider->getBckgSize().x * 0.5f));
+    }
+    else if(m_slider->getHolderPosition().x < m_slider->getBckgPos().x - (m_slider->getBckgSize().x * 0.5f))
+    {
+        m_slider->setHolderPosition(m_slider->getBckgPos().x - (m_slider->getBckgSize().x * 0.5f));
+    }
 }
 
 void Sorter::updateMousePos()
@@ -283,6 +317,7 @@ void Sorter::render(sf::RenderTarget &target)
     }
     
     renderUI(target);
+    m_slider->render(*m_ptrWindow);
 
 
     /*

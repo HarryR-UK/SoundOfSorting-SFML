@@ -26,6 +26,7 @@ Game::Game()
 
     m_sorter.setWindow(*m_window);
     m_sorter.initBars();
+    m_sorter.initSlider();
 }
 
 

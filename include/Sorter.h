@@ -23,6 +23,7 @@
 #include "SortingAlgorithms.h"
 #include "Button.h"
 #include "Time.h"
+#include "Slider.h"
 
 #include "SFML/System/Vector2.hpp"
 #include <vector>
@@ -58,7 +59,10 @@ class Sorter
 
         std::thread m_sortingThread;
 
+        
         SortingAlgorithms m_algorithms;
+        Slider* m_slider = nullptr;
+
         std::vector<Button> m_buttons;
         
         sf::Vector2f m_mousePosView;
@@ -67,15 +71,18 @@ class Sorter
         void getInput(  );
         void sortBars( );
         void randomiseBars();
-        void initText();
-        void updateText();
-        void renderUI( sf::RenderTarget& target );
-        void bubbleSort();
         void constrainDelay();
+
+        void initText();
         void initButtons();
+
+
+        void updateText();
         void updateButtons();
         void updateMousePos();
+        void updateSlider();
 
+        void renderUI( sf::RenderTarget& target );
 
     public:
 
@@ -95,6 +102,7 @@ class Sorter
         void setDelay(float delay);
 
         int& getDelay();
+        void initSlider();
 };
 
 
