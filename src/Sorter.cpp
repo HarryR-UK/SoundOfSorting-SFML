@@ -34,14 +34,14 @@ void Sorter::initText()
     m_infoText.setFont(m_font);
     m_infoText.setCharacterSize(20);
     m_infoText.setFillColor(sf::Color::White);
-    m_infoText.setPosition(sf::Vector2f(10,20));
+    m_infoText.setPosition(sf::Vector2f(30,100));
 }
 
 void Sorter::initButtons()
 {
-    Button& bubbleButton = addButton(sf::Vector2f(200,50), "BUBBLE", sf::Vector2f(100,40), m_font, m_mousePosView, SortTypes::BUBBLE);
-    Button& insertionButton = addButton(sf::Vector2f(350,50), "INSERTION", sf::Vector2f(150,40), m_font, m_mousePosView, SortTypes::INSERTION);
-    Button& selectionSort = addButton(sf::Vector2f(525,50), "SELECTION", sf::Vector2f(150,40), m_font, m_mousePosView, SortTypes::SELECTION);
+    Button& bubbleButton = addButton(sf::Vector2f(75,50), "BUBBLE", sf::Vector2f(100,40), m_font, m_mousePosView, SortTypes::BUBBLE);
+    Button& insertionButton = addButton(sf::Vector2f(210,50), "INSERTION", sf::Vector2f(150,40), m_font, m_mousePosView, SortTypes::INSERTION);
+    Button& selectionSort = addButton(sf::Vector2f(370,50), "SELECTION", sf::Vector2f(150,40), m_font, m_mousePosView, SortTypes::SELECTION);
 }
 
 void Sorter::initSlider()
@@ -69,9 +69,7 @@ void Sorter::updateText()
             sortType_S = "";
             break;
     }
-    ss << "FPS :" << Time::getFps() << '\n'
-        << "DELAY: " << m_sortDelay << '\n'
-        << "TYPE: " << sortType_S << '\n'
+     ss << "CURRENT TYPE: " << sortType_S << '\n'
         ;
     m_infoText.setString(ss.str());
 }
@@ -124,11 +122,18 @@ void Sorter::getInput(  )
             }
 
         }
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+        {
+            if(!m_keyHeld)
+            {
+                m_keyHeld = true;
+                randomiseBars();
+            }
+
+        }
         else
             m_keyHeld = false;
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-            randomiseBars();
 
     }
 
@@ -312,8 +317,8 @@ void Sorter::updateButtons()
 
 void Sorter::constrainDelay()
 {
-    if(m_sortDelay < 10)
-        m_sortDelay = 10;
+    if(m_sortDelay < 75)
+        m_sortDelay = 75;
     if(m_sortDelay > m_maxSortDelay)
         m_sortDelay = m_maxSortDelay;
 }

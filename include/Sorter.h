@@ -52,7 +52,7 @@ class Sorter
 
 
         int m_sortDelay = 200;
-        int m_maxSortDelay = 9999;
+        int m_maxSortDelay = 55555;
 
         // UI
         sf::Font m_font;

@@ -17,7 +17,7 @@ Button::Button( sf::Vector2f pos, std::string s, sf::Vector2f size, sf::Font& fo
     mainText.setFont(font);
     mainText.setString(s);
     mainText.setOrigin(sf::Vector2f(mainText.getGlobalBounds().width / 2.f, mainText.getGlobalBounds().height / 1.2f));
-    mainText.setPosition(bkgShape.getPosition());
+    mainText.setPosition((int) bkgShape.getPosition().x, (int) bkgShape.getPosition().y);
 }
 
 void Button::update()
