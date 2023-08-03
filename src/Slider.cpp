@@ -27,10 +27,35 @@ void Slider::initShapes()
     m_holder.setOrigin(sf::Vector2f(m_holder.getSize().x / 2.f, m_holder.getSize().y / 2.f));
 }
 
+void Slider::initText()
+{
+    // DO
+}
+
 void Slider::update()
 {
-    // LOGIC : size of bck is 100% so is maxDelay
-    m_percentOfMax = 
+    float backgroundWidth = m_bckg.getSize().x;
+
+    float backgroundCenterX = m_bckg.getPosition().x;
+
+    float holderPosX = m_holder.getPosition().x;
+
+    float percentageOfSize = (holderPosX - (backgroundCenterX - backgroundWidth * 0.5f)) / backgroundWidth;
+
+    percentageOfSize = std::max(0.0f, std::min(percentageOfSize, 1.0f));
+
+    float perOne = m_maxDelay / backgroundWidth;
+    m_sortDelay = percentageOfSize * m_maxDelay;
+    m_sortDelay = std::max<float>(m_sortDelay, 10.0f);
+
+
+
+
+    
+
+
+    
+
 }
 
 

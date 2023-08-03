@@ -3,6 +3,9 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/System/Vector2.hpp"
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <algorithm>
 #pragma once
 
 class Slider
@@ -17,9 +20,13 @@ class Slider
 
         sf::Vector2f& m_mousePosView;
 
+        sf::Text m_sliderDelayInfo;
+        sf::Font m_font;
+
     // Methods
     private:
         void initShapes( );
+        void initText( );
 
     // Attributes
     public:

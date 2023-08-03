@@ -48,10 +48,11 @@ class Sorter
 
         bool m_isSorting = false;
         bool m_finishSort = false;
+        bool m_isGrabbing = false;
 
 
         int m_sortDelay = 200;
-        int m_maxSortDelay = 99999;
+        int m_maxSortDelay = 9999;
 
         // UI
         sf::Font m_font;

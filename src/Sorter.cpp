@@ -46,8 +46,8 @@ void Sorter::initButtons()
 
 void Sorter::initSlider()
 {
-    sf::Vector2f size{300, 10};
-    sf::Vector2f pos{m_ptrWindow->getSize().x - (size.x), 30};
+    sf::Vector2f size{700, 10};
+    sf::Vector2f pos{m_ptrWindow->getSize().x - (size.x * 0.5f) - 50, 30};
     m_slider = new Slider(pos, size, m_mousePosView, m_maxSortDelay, m_sortDelay);
 }
 void Sorter::updateText()
@@ -264,13 +264,22 @@ void Sorter::updateSlider()
 {
     m_slider->update();
 
-    if(m_slider->checkHover())
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_slider->getHolderPosition().x <= m_slider->getBckgPos().x + (m_slider->getBckgSize().x * 0.5f) && m_slider->getHolderPosition().x >= m_slider->getBckgPos().x - (m_slider->getBckgSize().x * 0.5f))
+        if(m_slider->checkHover())
         {
-            m_slider->followMouse();
+            m_isGrabbing = true;
         }
     }
+    else {
+        m_isGrabbing = false;
+    }
+
+    if(m_isGrabbing)
+    {
+        m_slider->followMouse();
+    }
+
     if(m_slider->getHolderPosition().x > m_slider->getBckgPos().x + (m_slider->getBckgSize().x * 0.5f))
     {
         m_slider->setHolderPosition(m_slider->getBckgPos().x + (m_slider->getBckgSize().x * 0.5f));
@@ -303,8 +312,8 @@ void Sorter::updateButtons()
 
 void Sorter::constrainDelay()
 {
-    if(m_sortDelay < 0)
-        m_sortDelay = 0;
+    if(m_sortDelay < 10)
+        m_sortDelay = 10;
     if(m_sortDelay > m_maxSortDelay)
         m_sortDelay = m_maxSortDelay;
 }
