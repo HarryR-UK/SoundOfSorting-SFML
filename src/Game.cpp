@@ -76,15 +76,6 @@ void Game::pollEvents()
 
 void Game::getInput()
 {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    {
-        m_sorter.setDelay(10);
-    }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    { 
-        if(m_sorter.getDelay() > 0)
-            m_sorter.setDelay(-10);
-    }
 }
 
 void Game::updateMousePos()

@@ -56,6 +56,8 @@ void Slider::update()
 
     percentageOfSize = std::max(0.f, std::min(percentageOfSize, 1.0f));
 
+    // works out the percentage of the holder position with the size of the backgropund and sets
+    // the delay to the appropriate amount
     float perOne = m_maxDelay / backgroundWidth;
     m_sortDelay = percentageOfSize * m_maxDelay;
     m_sortDelay = std::max<float>(m_sortDelay, 75.f);
@@ -75,6 +77,11 @@ void Slider::update()
 
 bool Slider::checkHover()
 {
+    /*
+     * @return bool
+     *
+     * return whether the mouse is hovering over the Slider
+     */
     if(m_holder.getGlobalBounds().contains(m_mousePosView))
         return true;
 
@@ -84,6 +91,9 @@ bool Slider::checkHover()
 
 void Slider::followMouse()
 {
+    /*
+     * prevents the holder going past the background size
+     */
     if(m_holder.getPosition().x > m_bckg.getPosition().x + (m_bckg.getSize().x * 0.5))
     {
         return;
