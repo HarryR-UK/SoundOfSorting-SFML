@@ -62,6 +62,7 @@ void Slider::update()
 
 
     std::stringstream ss;
+    // microseconds
     ss << "DELAY :" << m_sortDelay << '\n';
     m_sliderDelayInfo.setString(ss.str());
     
