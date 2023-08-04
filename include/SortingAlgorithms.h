@@ -14,6 +14,7 @@ struct SortingAlgorithms
     void bubbleSort( std::vector<Bar>& bars, bool& isSorting );
     void insertionSort( std::vector<Bar>& bars, bool& isSorting );
     void selectionSort( std::vector<Bar>& bars, bool& isSorting );
+    void gnomeSort(std::vector<Bar>& bars, bool& isSorting);
 
     void setSortDelay(int& delay);
 };

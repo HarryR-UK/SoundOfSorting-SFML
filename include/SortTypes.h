@@ -6,7 +6,8 @@ enum SortTypes
 {
     BUBBLE = 1,
     INSERTION,
-    SELECTION
+    SELECTION,
+    GNOME
 };
 
 

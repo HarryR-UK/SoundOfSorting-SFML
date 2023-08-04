@@ -1,5 +1,6 @@
 #include "../include/Sorter.h"
 #include "SFML/System/Vector2.hpp"
+#include "SFML/Window/Keyboard.hpp"
 #include "SFML/Window/Mouse.hpp"
 #include <algorithm>
 #include <sstream>
@@ -41,7 +42,8 @@ void Sorter::initButtons()
 {
     Button& bubbleButton = addButton(sf::Vector2f(75,50), "BUBBLE", sf::Vector2f(100,40), m_font, m_mousePosView, SortTypes::BUBBLE);
     Button& insertionButton = addButton(sf::Vector2f(210,50), "INSERTION", sf::Vector2f(150,40), m_font, m_mousePosView, SortTypes::INSERTION);
-    Button& selectionSort = addButton(sf::Vector2f(370,50), "SELECTION", sf::Vector2f(150,40), m_font, m_mousePosView, SortTypes::SELECTION);
+    Button& selectionButton = addButton(sf::Vector2f(370,50), "SELECTION", sf::Vector2f(150,40), m_font, m_mousePosView, SortTypes::SELECTION);
+    Button& gnomeButton = addButton(sf::Vector2f(505,50), "GNOME", sf::Vector2f(100,40), m_font, m_mousePosView, SortTypes::GNOME);
 }
 
 void Sorter::initSlider()
@@ -64,6 +66,9 @@ void Sorter::updateText()
             break;
         case SortTypes::SELECTION:
             sortType_S = "SELECTION";
+            break;
+        case SortTypes::GNOME:
+            sortType_S = "GNOME";
             break;
         default:
             sortType_S = "";
@@ -111,6 +116,14 @@ void Sorter::getInput(  )
             {
                 m_keyHeld = true;
                 m_currentSort = SortTypes::SELECTION;
+            }
+        }
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
+        {
+            if(!m_keyHeld)
+            {
+                m_keyHeld = true;
+                m_currentSort = SortTypes::GNOME;
             }
         }
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -207,6 +220,10 @@ void Sorter::sortBars() {
         case SortTypes::SELECTION:
             m_isSorting = true;
             m_sortingThread = std::thread(&SortingAlgorithms::selectionSort, &m_algorithms, std::ref(m_bars), std::ref(m_isSorting));
+            break;
+        case SortTypes::GNOME:
+            m_isSorting = true;
+            m_sortingThread = std::thread(&SortingAlgorithms::gnomeSort, &m_algorithms, std::ref(m_bars), std::ref(m_isSorting));
             break;
         default:
             break;
