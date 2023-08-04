@@ -156,6 +156,7 @@ void Sorter::getInput(  )
 
 void Sorter::randomiseBars()
 {
+    m_finishSort = false;
     // clears vector
     m_bars.clear();
     m_barHeights.clear();
@@ -164,7 +165,7 @@ void Sorter::randomiseBars()
     int outlineThic = 1;
     m_barMaxHeight = m_ptrWindow->getSize().y - 200;
 
-    // add allowed sizes to vector
+    //SORTED
     for(std::size_t i = 0; i < maxNumberofBars; ++i)
     {
         int barHeight = i * m_barMaxHeight / maxNumberofBars;
@@ -192,7 +193,7 @@ void Sorter::randomiseBars()
 
 
         }
-        // prevents bars sharing the same height
+
         for(int x = 0; x < m_barHeights.size(); ++x)
         {
             if(m_barHeights[x] == ranHeight)
@@ -207,8 +208,6 @@ void Sorter::randomiseBars()
 
 
 void Sorter::sortBars() {
-
-    // begins a thread to the appropriate sorting algorithm based on the current sort type
     switch (m_currentSort) {
         case SortTypes::BUBBLE:
             m_isSorting = true;
@@ -241,6 +240,7 @@ void Sorter::setWindow(sf::RenderWindow &window)
 
 void Sorter::setDelay(float delay)
 {
+    //if(!m_isSorting)
         m_sortDelay += delay;
 }
 
