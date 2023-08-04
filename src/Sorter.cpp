@@ -156,8 +156,7 @@ void Sorter::getInput(  )
 
 void Sorter::randomiseBars()
 {
-    m_finishSort = false;
-    // initbars
+    // clears vector
     m_bars.clear();
     m_barHeights.clear();
     int maxNumberofBars = 200;
@@ -165,7 +164,7 @@ void Sorter::randomiseBars()
     int outlineThic = 1;
     m_barMaxHeight = m_ptrWindow->getSize().y - 200;
 
-    //SORTED
+    // add allowed sizes to vector
     for(std::size_t i = 0; i < maxNumberofBars; ++i)
     {
         int barHeight = i * m_barMaxHeight / maxNumberofBars;
@@ -193,7 +192,7 @@ void Sorter::randomiseBars()
 
 
         }
-
+        // prevents bars sharing the same height
         for(int x = 0; x < m_barHeights.size(); ++x)
         {
             if(m_barHeights[x] == ranHeight)
