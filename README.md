@@ -23,6 +23,6 @@ Gnome sort. Simply choose your algorithm, adjust the delay of the algorithm with
 
 # HAVE A LOOK
 
-![SORT](img/VID/sorting.mp4)
+![CLICK HERE TO SEE VIDEO](img/VID/sorting.mp4)
 
 
