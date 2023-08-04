@@ -207,6 +207,8 @@ void Sorter::randomiseBars()
 
 
 void Sorter::sortBars() {
+
+    // begins a thread to the appropriate sorting algorithm based on the current sort type
     switch (m_currentSort) {
         case SortTypes::BUBBLE:
             m_isSorting = true;
@@ -239,7 +241,6 @@ void Sorter::setWindow(sf::RenderWindow &window)
 
 void Sorter::setDelay(float delay)
 {
-    //if(!m_isSorting)
         m_sortDelay += delay;
 }
 
