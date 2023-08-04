@@ -47,13 +47,13 @@ void SortingAlgorithms::bubbleSort(std::vector<Bar> &bars, bool& isSorting)
             for(auto &bar : bars)
             {
                 bar.barShape.setFillColor(sf::Color::Green);
-                usleep(800);
+                usleep(1000);
             }
             usleep(100);
             for(auto &bar : bars)
             {
                 bar.barShape.setFillColor(sf::Color::White);
-                usleep(800);
+                usleep(1000);
             }
 
             break;
@@ -100,13 +100,13 @@ void SortingAlgorithms::insertionSort(std::vector<Bar> &bars,bool& isSorting)
     for(auto &bar : bars)
     {
         bar.barShape.setFillColor(sf::Color::Green);
-        usleep(800);
+        usleep(1000);
     }
     usleep(100);
     for(auto &bar : bars)
     {
         bar.barShape.setFillColor(sf::Color::White);
-        usleep(800);
+        usleep(1000);
     }
 
     isSorting = false;
@@ -164,13 +164,13 @@ void SortingAlgorithms::selectionSort(std::vector<Bar> &bars,bool& isSorting)
     for(auto &bar : bars)
     {
         bar.barShape.setFillColor(sf::Color::Green);
-        usleep(800);
+        usleep(1000);
     }
     usleep(100);
     for(auto &bar : bars)
     {
         bar.barShape.setFillColor(sf::Color::White);
-        usleep(800);
+        usleep(1000);
     }
 
     isSorting = false;
@@ -221,13 +221,13 @@ void SortingAlgorithms::gnomeSort(std::vector<Bar>& bars, bool& isSorting)
     for(auto &bar : bars)
     {
         bar.barShape.setFillColor(sf::Color::Green);
-        usleep(800);
+        usleep(1000);
     }
     usleep(100);
     for(auto &bar : bars)
     {
         bar.barShape.setFillColor(sf::Color::White);
-        usleep(800);
+        usleep(1000);
     }
 
     isSorting = false;
