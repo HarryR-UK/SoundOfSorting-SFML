@@ -162,7 +162,7 @@ void Sorter::randomiseBars()
     m_barHeights.clear();
     int maxNumberofBars = 200;
     m_barSize = (float) m_ptrWindow->getSize().x / maxNumberofBars;
-    int outlineThic = 1;
+    int outlineThic = 0;
     m_barMaxHeight = m_ptrWindow->getSize().y - 200;
 
     //SORTED
