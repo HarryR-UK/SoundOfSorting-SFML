@@ -8,7 +8,7 @@ code, and decided to just restart the whole project. I am much happier with how 
 This project is a visual representation of 4 different sorting algorithms: Bubble sort, Insertion sort, Selection sort and 
 Gnome sort. Simply choose your algorithm, adjust the delay of the algorithm with the slider, and press SPACE to watch as the blocks are sorted!
 
-![SORTING]("../img/sorting.png")
+![SORTING](img/sorting.png)
 
 # CONTROLS
 >
@@ -21,5 +21,6 @@ Gnome sort. Simply choose your algorithm, adjust the delay of the algorithm with
 
 # HAVE A LOOK
 
-![SORT]("../img/VID/sorting.mp4")
+![SORT](img/VID/sorting.mp4)
+
 
