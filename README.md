@@ -4,6 +4,8 @@ This is a project written in C++ and using the SFML library for graphics. I prev
 out with C++ and SFML, and wanted to go back to the project to improve and add to it, however, I was unhappy with a lot of the
 code, and decided to just restart the whole project. I am much happier with how this turned out!
 
+This current project does not include audio (at the moment) so instead, lets call it "Of Sorting".
+
 # About
 This project is a visual representation of 4 different sorting algorithms: Bubble sort, Insertion sort, Selection sort and 
 Gnome sort. Simply choose your algorithm, adjust the delay of the algorithm with the slider, and press SPACE to watch as the blocks are sorted!
